@@ -1,0 +1,28 @@
+[Unit]
+Description=NVMe & PCIe Hardware Telemetry & Link Status Daemon
+After=network.target local-fs.target
+Documentation=https://github.com/patrick-isles/nvme-sentinel-rs
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/local/bin/nvme-sentinel-rs
+Restart=always
+RestartSec=5s
+
+# Security Hardening & Sandboxing Controls
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+MemoryDenyWriteExecute=true
+CapabilityBoundingSet=CAP_SYS_ADMIN CAP_SYS_RAWIO
+AmbientCapabilities=CAP_SYS_ADMIN CAP_SYS_RAWIO
+DevicePolicy=closed
+DeviceAllow=/dev/nvme0 rw
+DeviceAllow=/dev/nvme0n1 r
+
+[Install]
+WantedBy=multi-user.target

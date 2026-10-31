@@ -1,0 +1,20 @@
+[package]
+name = "nvme-sentinel-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Patrick Isles <patrick.isles@pcc.edu>"]
+description = "Production NVMe & PCIe Physical Link Telemetry, SMART Health Analytics & Prometheus Exporter in pure Rust"
+license = "MIT"
+
+[dependencies]
+libc = "0.2"
+tiny_http = "0.12"
+crossbeam-channel = "0.5"
+ctrlc = "3.4"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
